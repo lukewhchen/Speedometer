@@ -4,25 +4,31 @@
     <meta charset="utf-8">
     <title>SpeedMeter</title>
     <style media="screen">
-      body {
-        background-color: green;
-        /* opacity: 0.9; */
-      }
-      .meter {
-        margin: auto;
-        text-align: center;
-      }
-      /* h1 {
-        color: red;
-      } */
+
       h2 {
-        font-size: 100px;
+        font-size: 30px;
+      }
+
+      img {
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+      }
+
+      .meter {
+        background-color: red;
+      }
+
+      .dial {
+        background-color: transparent;
+        bottom: 20%;
+        z-index: 3;
       }
     </style>
 
     <script type="text/javascript">
       (function(){
-        // window.addEventListener("load", startMeter());
+        window.addEventListener("load", startMeter());
         const COLOR = ["green", "orange", "red"]
         function startMeter() {
           setInterval(setSpeed, 3000);
@@ -31,21 +37,20 @@
         function setSpeed() {
           // create random number between 0~180
           let speed = Math.floor( Math.random() * 181 )
-          let meter = document.getElementById("meter").innerHTML = speed;
+          let meter = document.getElementById("read").innerHTML = speed;
           let colorIdx = Math.floor( speed/60 )
-          document.body.style.background = COLOR[colorIdx];
-
-
+          document.querySelector(".meter").style.backgroundColor = COLOR[colorIdx];
         }
       })()
     </script>
 
   </head>
   <body>
-    <div class="meter">
-      <h1>SpeedMeter</h1>
-      <h2 id="meter">50</h2>
-      <img src="" alt="">
+    <h1>SpeedMeter</h1>
+    <h2 id="read">50</h2>
+    <div class="wrapper">
+      <img src="dial.png" alt="dial" class="dial">
+      <img src="meter.png" alt="meter" class="meter">
     </div>
 
 
