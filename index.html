@@ -17,13 +17,18 @@
 
       .meter {
         background-color: red;
+        transition: 1s;
       }
 
       .dial {
         background-color: transparent;
         bottom: 125px;
         z-index: 3;
+        transform-origin: center 85%;
+        transform: rotate(-120deg);
+        transition: 1.5s;
       }
+
     </style>
 
     <script type="text/javascript">
@@ -39,7 +44,10 @@
           let speed = Math.floor( Math.random() * 181 )
           let meter = document.getElementById("read").innerHTML = speed;
           let colorIdx = Math.floor( speed/60 )
+          let angle = (speed * 240 / 180) - 120;
+          let transform = `rotate(${angle}deg)`
           document.querySelector(".meter").style.backgroundColor = COLOR[colorIdx];
+          document.querySelector(".dial").style.transform = transform;
         }
       })()
     </script>
@@ -47,13 +55,14 @@
   </head>
   <body>
     <h1>SpeedMeter</h1>
-    <h2 id="read">50</h2>
+    <h2 id="read">0</h2>
     <div class="wrapper">
       <img src="dial.png" alt="dial" class="dial">
       <img src="meter.png" alt="meter" class="meter">
     </div>
 
-
+<!-- opacity: 0.2;
+    color change by angle-->
 
   </body>
 </html>
