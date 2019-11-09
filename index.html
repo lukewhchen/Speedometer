@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>SpeedMeter</title>
+    <style media="screen">
+      html {
+        background-color: grey;
+      }
+      .meter {
+        margin: auto;
+        text-align: center;
+      }
+      h1 {
+        color: red;
+      }
+    </style>
+
+    <script type="text/javascript">
+      (function(){
+        window.addEventListener("load", setSpeed())
+
+        function setSpeed() {
+          setTimeout(alert("hi"), 3000);
+        }
+
+        let test = document.querySelector("h1");
+
+        test.innerHTML = "test";
+      })()
+    </script>
+
+  </head>
+  <body>
+    <div class="meter">
+      <h1>SpeedMeter</h1>
+      <h2>50</h2>
+    </div>
+
+
+
+  </body>
+</html>
