@@ -5,6 +5,9 @@
     <title>SpeedMeter</title>
     <style media="screen">
 
+      body {
+        text-align: center;
+      }
       h2 {
         font-size: 30px;
       }
@@ -16,8 +19,8 @@
       }
 
       .meter {
-        background-color: red;
-        transition: 2s;
+        background-color: rgba(0,128,0, .8);
+        transition: 1.5s;
       }
 
       .dial {
@@ -29,23 +32,31 @@
         transition: 1.5s;
       }
 
+      #value {
+        transition: 1.5s;
+      }
+
     </style>
 
     <script type="text/javascript">
       (function(){
-        window.addEventListener("load", startMeter());
-        const COLOR = ["green", "orange", "red"]
+        // green, orange, and red with 20% opacity
+        const COLOR = ["rgba(0,128,0, .8)", "rgba(255,165,0, .8)", "rgba(255,0,0, .8)"]
+
+        document.addEventListener("load", startMeter());
+        
         function startMeter() {
-          setInterval(setSpeed, 3000);
+          setInterval(setSpeed, 4000);
         }
 
         function setSpeed() {
           // create random number between 0~180
           let speed = Math.floor( Math.random() * 181 )
-          let meter = document.getElementById("read").innerHTML = speed;
           let colorIdx = Math.floor( speed/60 )
           let angle = (speed * 240 / 180) - 120;
           let transform = `rotate(${angle}deg)`
+
+          document.getElementById("value").innerHTML = speed;
           document.querySelector(".meter").style.backgroundColor = COLOR[colorIdx];
           document.querySelector(".dial").style.transform = transform;
         }
@@ -55,14 +66,10 @@
   </head>
   <body>
     <h1>SpeedMeter</h1>
-    <h2 id="read">0</h2>
+    <h2 id="value">0</h2>
     <div class="wrapper">
       <img src="dial.png" alt="dial" class="dial">
       <img src="meter.png" alt="meter" class="meter">
     </div>
-
-<!-- opacity: 0.2;
-    color change by angle-->
-
   </body>
 </html>
