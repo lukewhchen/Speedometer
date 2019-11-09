@@ -4,29 +4,39 @@
     <meta charset="utf-8">
     <title>SpeedMeter</title>
     <style media="screen">
-      html {
-        background-color: grey;
+      body {
+        background-color: green;
+        /* opacity: 0.9; */
       }
       .meter {
         margin: auto;
         text-align: center;
       }
-      h1 {
+      /* h1 {
         color: red;
+      } */
+      h2 {
+        font-size: 100px;
       }
     </style>
 
     <script type="text/javascript">
       (function(){
-        window.addEventListener("load", setSpeed())
-
-        function setSpeed() {
-          setTimeout(alert("hi"), 3000);
+        // window.addEventListener("load", startMeter());
+        const COLOR = ["green", "orange", "red"]
+        function startMeter() {
+          setInterval(setSpeed, 3000);
         }
 
-        let test = document.querySelector("h1");
+        function setSpeed() {
+          // create random number between 0~180
+          let speed = Math.floor( Math.random() * 181 )
+          let meter = document.getElementById("meter").innerHTML = speed;
+          let colorIdx = Math.floor( speed/60 )
+          document.body.style.background = COLOR[colorIdx];
 
-        test.innerHTML = "test";
+
+        }
       })()
     </script>
 
@@ -34,7 +44,8 @@
   <body>
     <div class="meter">
       <h1>SpeedMeter</h1>
-      <h2>50</h2>
+      <h2 id="meter">50</h2>
+      <img src="" alt="">
     </div>
 
 
