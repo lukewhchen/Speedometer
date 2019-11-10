@@ -33,12 +33,12 @@
         z-index: 3;
         transform-origin: center 84%;
         transform: rotate(-120deg);
-        transition: 1.5s;
+        /* transition: 1.5s; */
       }
 
       .speedometer .meter {
         background-color: rgba(0,128,0, .8);
-        transition: 1.5s;
+        /* transition: 1.5s; */
       }
 
       .speedometer .value {
@@ -72,23 +72,23 @@
         const COLOR = ["rgba(0,128,0, .8)", "rgba(255,165,0, .8)", "rgba(255,0,0, .8)"]
         document.addEventListener("load", startMeter());
 
+        // let btn = document.querySelector(".btn");
+        // console.log(btn);
+        // btn.addEventListener("click", console.log("hi"))
+
         function startMeter() {
+          let btn = document.getElementById("btn");
+          console.log(btn);
           setInterval(setSpeed, 4000);
         }
 
         function setSpeed() {
           // create random number between 0~180
           let newSpeed = Math.floor( Math.random() * 181 )
-          let colorIdx = Math.floor( newSpeed/60 )
-          let angle = (newSpeed * 240 / 180) - 120;
-          let transform = `rotate(${angle}deg)`
           let currentSpeed = document.getElementById("speed").innerHTML;
 
           // animate speed change
           animateSpeed(currentSpeed, newSpeed);
-          // animate background color and dial angle
-          document.querySelector(".meter").style.backgroundColor = COLOR[colorIdx];
-          document.querySelector(".dial").style.transform = transform;
         }
 
         function animateSpeed(start, end) {
@@ -101,13 +101,21 @@
 
           let startTime = new Date().getTime();
           let endTime = startTime + duration;
-          let intervalID = setInterval(run, intervalTime);
+          let intervalID = setInterval(animateEffect, intervalTime);
 
-          function run() {
+          function animateEffect() {
             let now = new Date().getTime();
             let remaining = Math.max((endTime - now)/duration, 0);
             let value = Math.round( end - (remaining * range));
+
+            let colorIdx = Math.floor( value/60 )
+            let angle = (value * 240 / 180) - 120;
+            let transform = `rotate(${angle}deg)`
+
             document.getElementById("speed").innerHTML = value;
+            document.querySelector(".meter").style.backgroundColor = COLOR[colorIdx];
+            document.querySelector(".dial").style.transform = transform;
+
             if ( value === end ) {
               clearInterval(intervalID);
             }
@@ -119,6 +127,7 @@
   </head>
   <body>
     <h1>Speedometer</h1>
+    <button type="button" name="button" id="btn">STOP</button>
     <div class="speedometer">
       <img src="dial.png" alt="dial" class="dial">
       <img src="meter.png" alt="meter" class="meter">
