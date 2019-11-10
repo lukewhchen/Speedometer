@@ -8,31 +8,38 @@
       body {
         text-align: center;
       }
-      h2 {
+
+      #speed {
+        display: inline-block;
         font-size: 30px;
+        font-weight: bold;
+        width: 50px;
       }
 
-      img {
+      .wrapper {
+        position: relative;
+        margin: auto;
+        width: 500px;
+        height: 500px;
+      }
+
+      .wrapper img {
         margin: auto;
         position: absolute;
         top: 0; left: 0; bottom: 0; right: 0;
       }
 
-      .meter {
+      .wrapper .meter {
         background-color: rgba(0,128,0, .8);
         transition: 1.5s;
       }
 
-      .dial {
+      .wrapper .dial {
         background-color: transparent;
         bottom: 125px;
         z-index: 3;
-        transform-origin: center 85%;
+        transform-origin: center 84%;
         transform: rotate(-120deg);
-        transition: 1.5s;
-      }
-
-      #value {
         transition: 1.5s;
       }
 
@@ -42,31 +49,57 @@
       (function(){
         // green, orange, and red with 20% opacity
         const COLOR = ["rgba(0,128,0, .8)", "rgba(255,165,0, .8)", "rgba(255,0,0, .8)"]
-
         document.addEventListener("load", startMeter());
-        
+
         function startMeter() {
           setInterval(setSpeed, 4000);
         }
 
         function setSpeed() {
           // create random number between 0~180
-          let speed = Math.floor( Math.random() * 181 )
-          let colorIdx = Math.floor( speed/60 )
-          let angle = (speed * 240 / 180) - 120;
+          let newSpeed = Math.floor( Math.random() * 181 )
+          let colorIdx = Math.floor( newSpeed/60 )
+          let angle = (newSpeed * 240 / 180) - 120;
           let transform = `rotate(${angle}deg)`
+          let currentSpeed = document.getElementById("speed").innerHTML;
 
-          document.getElementById("value").innerHTML = speed;
+          // animate speed change
+          animateSpeed(currentSpeed, newSpeed);
           document.querySelector(".meter").style.backgroundColor = COLOR[colorIdx];
           document.querySelector(".dial").style.transform = transform;
+        }
+
+        function animateSpeed(start, end) {
+          let duration = 1250;
+          let range = end - start;
+
+          let miniStep = 30;
+          let calcStep = Math.abs( Math.floor( duration/range ));
+          let intervalTime = Math.max(calcStep, miniStep);
+
+          let startTime = new Date().getTime();
+          let endTime = startTime + duration;
+          let intervalID = setInterval(run, intervalTime);
+
+          function run() {
+            let now = new Date().getTime();
+            let remaining = Math.max((endTime - now)/duration, 0);
+            let value = Math.round( end - (remaining * range));
+            document.getElementById("speed").innerHTML = value;
+            if ( value === end ) {
+              clearInterval(intervalID);
+            }
+          }
         }
       })()
     </script>
 
   </head>
   <body>
-    <h1>SpeedMeter</h1>
-    <h2 id="value">0</h2>
+    <div class="header">
+      <h1>SpeedMeter</h1>
+      <span id="speed">0</span><span> MPH</span>
+    </div>
     <div class="wrapper">
       <img src="dial.png" alt="dial" class="dial">
       <img src="meter.png" alt="meter" class="meter">
