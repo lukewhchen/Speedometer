@@ -66,7 +66,6 @@
 
     <script type="text/javascript">
       (function(){
-        // green, orange, and red with 20% opacity
         const COLOR = ["rgba(0,128,0, .8)", "rgba(255,165,0, .8)", "rgba(255,0,0, .8)"]
         window.addEventListener('DOMContentLoaded', startMeter());
 
@@ -75,22 +74,17 @@
         }
 
         function setSpeed() {
-          // create random number between 0~180
           let newSpeed = Math.floor( Math.random() * 181 )
           let currentSpeed = document.getElementById("speed").innerHTML;
-
-          // animate speed change
           animateSpeed(currentSpeed, newSpeed);
         }
 
         function animateSpeed(start, end) {
           let duration = 1250;
           let range = end - start;
-
           let miniStep = 30;
           let calcStep = Math.abs( Math.floor( duration/range ));
           let intervalTime = Math.max(calcStep, miniStep);
-
           let startTime = new Date().getTime();
           let endTime = startTime + duration;
           let intervalID = setInterval(animateEffect, intervalTime);
@@ -99,7 +93,6 @@
             let now = new Date().getTime();
             let remaining = Math.max((endTime - now)/duration, 0);
             let value = Math.round( end - (remaining * range));
-
             let colorIdx = Math.floor( value/60 )
             let angle = (value * 240 / 180) - 120;
             let transform = `rotate(${angle}deg)`
