@@ -89,7 +89,7 @@
           let startTime = new Date().getTime();
           let endTime = startTime + duration;
           let intervalID = setInterval(animateEffect, intervalTime);
-
+// angle calculation
           function animateEffect() {
             let now = new Date().getTime();
             let remaining = Math.max((endTime - now)/duration, 0);
